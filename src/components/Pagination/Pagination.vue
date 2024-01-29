@@ -25,8 +25,8 @@
         class="flex justify-center items-center"
       >
         <button
-          class="py-2 px-4 bg-amber-200 rounded-[5px] font-bold transition-all hover:bg-slate-300"
-          :class="page === currentPage ? 'bg-slate-300' : ''"
+          class="py-2 px-4 rounded-[5px] font-bold transition-all hover:bg-slate-300 dark:hover:bg-cyan-800 dark:hover:text-white"
+          :class="page === currentPage ? 'bg-slate-300 dark:bg-cyan-800 dark:text-white' : 'bg-amber-200 dark:bg-slate-300'"
           type="button"
           @click="onClickPage(page)"
         >
@@ -55,7 +55,7 @@
 
     <div class="flex justify-center items-center ml-6">
       <label 
-        class="text-sm font-bold" 
+        class="text-sm font-bold dark:text-white" 
         for="record-count"
       >
         Кол-во записей
@@ -63,7 +63,7 @@
       <input
         id="record-count"
         v-model="localePerPage"
-        class="w-10 ml-2 p-1 pr-0 rounded-[5px] font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        class="w-10 ml-2 p-1 pr-0 outline-0 rounded-[5px] font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         type="number"
         :max="maxPerPage"
         @keydown.enter="changePerPage"

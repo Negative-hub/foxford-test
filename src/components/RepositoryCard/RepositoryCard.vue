@@ -1,8 +1,8 @@
 <template>
-	<div class="w-full bg-white px-6 py-4 mt-8 rounded-[5px] drop-shadow-lg overflow-hidden">
+	<div class="w-full bg-white px-6 py-4 mt-8 rounded-[5px] drop-shadow-lg overflow-hidden dark:bg-sky-900">
 		<div class="text-center">
 			<a 
-				class="text-2xl font-bold"
+				class="text-2xl font-bold dark:text-white"
 				:href="gitUrl" 
 				target="_black"
 			>
@@ -26,7 +26,7 @@
 						:alt="owner.login"
 					/>
 
-					<div class="ml-2 text-lg font-bold">
+					<div class="ml-2 text-lg font-bold dark:text-white">
 						{{ owner.login }}
 					</div>
 				</div>
@@ -34,11 +34,11 @@
 			<div class="flex flex-col items-end flex-1">
 				<span
 					v-if="language && language.length"
-					class="text-lg"
+					class="text-lg dark:text-white"
 				>
 					Язык программирования: {{ language }}
 				</span>
-				<span class="text-lg">
+				<span class="text-lg dark:text-white">
 					Кол-во ⭐: {{ stargazersCount }}
 				</span>
 			</div>

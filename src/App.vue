@@ -1,12 +1,25 @@
 <template>
   <div class="wrapper">
+    <div class="mb-5 flex justify-end">
+      <SunSVG 
+        v-if="isDarkTheme"
+        class="size-12 cursor-pointer"
+        @click="toggleTheme"
+      />
+      <MoonSVG
+        v-else
+        class="size-12 cursor-pointer"
+        @click="toggleTheme"
+      />
+    </div>
+
     <BaseInput 
       :value="message"
       placeholder="Введите названия или описание репозиториев"
       @changeValue="inputHandler"
     />
 
-    <h1 class="mt-10 text-center text-2xl font-bold">
+    <h1 class="mt-10 text-center text-2xl font-bold dark:text-white">
       Репозитории из GitHub
     </h1>
 
@@ -64,6 +77,9 @@ import RepositoryCard from '@/components/RepositoryCard/RepositoryCard.vue';
 import Pagination from '@/components/Pagination/Pagination.vue';
 import Spinner from '@/components/Spinner/Spinner.vue'
 
+import SunSVG from '@/assets/icons/sun.svg?component';
+import MoonSVG from '@/assets/icons/moon.svg?component';
+
 export default defineComponent({
   name: 'App',
 
@@ -71,7 +87,9 @@ export default defineComponent({
     BaseInput, 
     RepositoryCard, 
     Pagination, 
-    Spinner
+    Spinner,
+    SunSVG,
+    MoonSVG
   },
 
   data(): ComponentData {
@@ -80,6 +98,7 @@ export default defineComponent({
       page: 1,
       perPage: 30,
       isLoading: false,
+      isDarkTheme: false,
       repositories: {
         total_count: 0,
         items: []
@@ -104,12 +123,16 @@ export default defineComponent({
 
     if (message && message.length) {
       this.message = message;
+      this.fetchRepositories();
     }
-
-    this.fetchRepositories();
   },
 
   methods: {
+    toggleTheme() {
+      this.isDarkTheme = !this.isDarkTheme;
+      document.documentElement.classList.toggle('dark');
+    },
+
     async fetchRepositories() {
       this.isLoading = true;
 

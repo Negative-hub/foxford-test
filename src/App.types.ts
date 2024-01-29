@@ -22,5 +22,6 @@ export interface ComponentData {
   page: number,
   perPage: number,
   isLoading: boolean,
+  isDarkTheme: boolean,
   repositories: Repositories
 }
