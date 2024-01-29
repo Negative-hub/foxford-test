@@ -1,8 +1,9 @@
 version: '2'
 
 services:
-  foxford-test:
-    container_name: foxford-test
+  foxford:
+    container_name: foxford
+    image: foxford-image
     build: 
       dockerfile: ./Dockerfile
     ports:
