@@ -3,7 +3,7 @@ export interface Repository {
   name: string,
   description: string,
   stargazers_count: number,
-  language: string | null,
+  language: string,
   git_url: string,
   owner: {
     login: string,

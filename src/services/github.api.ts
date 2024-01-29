@@ -6,6 +6,11 @@ interface SearchParams {
 	page: number
 }
 
+interface GitHubApiError {
+	documentation_url: string,
+	message: string
+}
+
 export async function githubApi<T>(params: SearchParams): Promise<T> {
 	const url = new URL('https://api.github.com/search/repositories');
 
@@ -23,6 +28,12 @@ export async function githubApi<T>(params: SearchParams): Promise<T> {
 			...(token ? {'Authorization': `Bearer ${token}`} : {})
 		},
 	})
-    .then((response) => response.json() as Promise<T>)
-		.catch((error) => error)
+    .then((response) => {
+			if (response.ok) {
+				return response.json() as Promise<T>;
+			}
+			
+			return Promise.reject(response);
+		})
+		.catch((response) => response.json().then((error: GitHubApiError) => alert(error.message)))
 }

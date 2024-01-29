@@ -33,7 +33,7 @@
 			</a>
 			<div class="flex flex-col items-end flex-1">
 				<span
-					v-if="language"
+					v-if="language && language.length"
 					class="text-lg"
 				>
 					Язык программирования: {{ language }}
@@ -66,7 +66,7 @@ export default defineComponent({
 		},
 
 		language: {
-			type: [String, null],
+			type: String,
 			required: true
 		},
 

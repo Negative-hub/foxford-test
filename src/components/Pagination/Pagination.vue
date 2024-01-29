@@ -97,7 +97,7 @@ export default defineComponent({
 
     maxPerPage: {
       type: Number,
-      default: 30
+      default: 100
     }
   },
 
@@ -129,15 +129,15 @@ export default defineComponent({
         return 1;
       }
 
-      if (this.currentPage === this.totalPages) {
-        return this.currentPage - this.maxVisibleButtons;
+      if (this.currentPage > this.totalPages - Math.ceil(this.maxVisibleButtons / 2)) {
+        return this.totalPages - this.maxVisibleButtons + 1;
       }
 
       return this.currentPage - Math.floor(this.maxVisibleButtons / 2);
     },
 
     endPage(): number {
-      return Math.min(this.startPage + this.maxVisibleButtons, this.totalPages);
+      return Math.min(this.startPage + this.maxVisibleButtons, this.totalPages + 1);
     },
 
     availablePages(): number[] {
@@ -168,7 +168,7 @@ export default defineComponent({
     },
 
     prevPage() {
-      this.$emit('paginate', this.totalPages - 1);
+      this.$emit('paginate', this.currentPage - 1);
     },
 
     onFirstPage() {
@@ -180,6 +180,10 @@ export default defineComponent({
     },
 
     changePerPage() {
+      if (this.localePerPage > 100) {
+        this.localePerPage = 100;
+      }
+      
       this.$emit('perPage', this.localePerPage);
     },
 

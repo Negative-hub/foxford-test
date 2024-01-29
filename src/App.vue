@@ -94,12 +94,12 @@ export default defineComponent({
     const page = searchParams.get('page');
     const perPage = searchParams.get('per_page');
 
-    if (page && +page > 0 && Number.isInteger(+page)) {
-      this.page = +page;
+    if (perPage && +perPage > 0 && +perPage <= 100 && Number.isInteger(+perPage)) {
+      this.perPage = +perPage;
     }
 
-    if (perPage && +perPage > 0 && +perPage <= 30 && Number.isInteger(+perPage)) {
-      this.perPage = +perPage;
+    if (page && +page > 0 && Number.isInteger(+page)) {
+      this.page = +page;
     }
 
     if (message && message.length) {
@@ -113,20 +113,18 @@ export default defineComponent({
     async fetchRepositories() {
       this.isLoading = true;
 
-      try {
-        const response = await githubApi<Repositories>({
-          q: this.message,
-          per_page: this.perPage, 
-          page: this.page
-        })
+      const response = await githubApi<Repositories | void>({
+        q: this.message,
+        per_page: this.perPage, 
+        page: this.page
+      })
 
-        this.repositories.total_count = response.total_count;
+      if (response) {
+        this.repositories.total_count = Math.min(response.total_count, 1000); // GitHub дает взять только первые 1000 записей
         this.repositories.items = response.items;
-      } catch (e) {
-        alert(e);
-      } finally {
-        this.isLoading = false;
       }
+
+      this.isLoading = false;
     },
 
     inputHandler(value: string) {
